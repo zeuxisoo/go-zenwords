@@ -27,16 +27,23 @@ func runWeb(c *cli.Context) error {
 	//
 	address := c.String("address")
 	port := c.String("port")
+	isProductionMode := c.IsSet("prod")
 
-	if c.IsSet("prod") {
+	if isProductionMode == true {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
 	//
 	engine := gin.Default()
+	engine.GET("/", routes.HomeIndexGet)
+	engine.GET("/robots.txt", routes.HomeRobotsTxtGet)
 
-	engine.GET("/", routes.HomeGet)
+	//
+	if isProductionMode == true {
+		fmt.Printf("Listen on %s:%s\n", address, port)
+	}
 
+	//
 	engine.Run(fmt.Sprintf("%s:%s", address, port))
 
 	return nil
