@@ -8,7 +8,9 @@ import (
 )
 
 func createEngine() *gin.Engine {
-	engine := gin.Default()
+	engine := gin.New()
+	engine.Use(gin.Recovery())
+
 	engine.GET("/", HomeIndexGet)
 	engine.GET("/robots.txt", HomeRobotsTxtGet)
 
