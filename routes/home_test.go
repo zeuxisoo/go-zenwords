@@ -25,8 +25,6 @@ func TestHomeIndexGetOK(t *testing.T) {
 func TestHomeRobotsTxtGetOK(t *testing.T) {
 	Convey("HomeRobotsTxtGet /robots.txt should be OK", t, func() {
 		Convey("When robots.txt is not exists", func() {
-			os.Remove("robots.txt")
-
 			responseRecorder := performRequest(engine, "GET", "/robots.txt")
 
 			So(responseRecorder.Code, ShouldEqual, http.StatusOK)
@@ -42,6 +40,8 @@ func TestHomeRobotsTxtGetOK(t *testing.T) {
 			So(responseRecorder.Code, ShouldEqual, http.StatusOK)
 			So(responseRecorder.Body.String(), ShouldContainSubstring, "Hello World")
 			So(responseRecorder.Body.String(), ShouldContainSubstring, "robots.txt")
+
+			os.Remove("robots.txt")
 		})
 	})
 }
