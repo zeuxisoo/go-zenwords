@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/zeuxisoo/go-zenwords/routes/home"
+	"github.com/zeuxisoo/go-zenwords/routes/api"
 )
 
 // Web command for start web service
@@ -38,6 +39,10 @@ func runWeb(c *cli.Context) error {
 
 	engine.GET("/", home.IndexGet)
 	engine.GET("/robots.txt", home.RobotsTxtGet)
+
+	engine.
+		Group("/api").
+		POST("/search", api.SearchPost)
 
 	//
 	if isProductionMode == true {
