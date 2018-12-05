@@ -7,17 +7,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func createEngine() *gin.Engine {
+// CreateEngine return the gin engine for test case
+func CreateEngine() *gin.Engine {
 	engine := gin.New()
 	engine.Use(gin.Recovery())
-
-	engine.GET("/", HomeIndexGet)
-	engine.GET("/robots.txt", HomeRobotsTxtGet)
 
 	return engine
 }
 
-func performRequest(handler http.Handler, method string, path string) *httptest.ResponseRecorder {
+// PerformRequest return the response detail for related method and path
+func PerformRequest(handler http.Handler, method string, path string) *httptest.ResponseRecorder {
 	request, _ := http.NewRequest(method, path, nil)
 	responseRecorder := httptest.NewRecorder()
 

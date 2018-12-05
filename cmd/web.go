@@ -6,7 +6,7 @@ import (
 	"github.com/urfave/cli"
 	"github.com/gin-gonic/gin"
 
-	"github.com/zeuxisoo/go-zenwords/routes"
+	"github.com/zeuxisoo/go-zenwords/routes/home"
 )
 
 // Web command for start web service
@@ -35,8 +35,9 @@ func runWeb(c *cli.Context) error {
 
 	//
 	engine := gin.Default()
-	engine.GET("/", routes.HomeIndexGet)
-	engine.GET("/robots.txt", routes.HomeRobotsTxtGet)
+
+	engine.GET("/", home.IndexGet)
+	engine.GET("/robots.txt", home.RobotsTxtGet)
 
 	//
 	if isProductionMode == true {
