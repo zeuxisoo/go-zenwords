@@ -1,6 +1,11 @@
 package cmd
 
 import (
+	"os"
+	"bufio"
+	"io"
+	"bytes"
+	"log"
 	"fmt"
 
 	"github.com/urfave/cli"
@@ -23,8 +28,17 @@ var Web = cli.Command{
 	},
 }
 
-
 func runWeb(c *cli.Context) error {
+	//
+	log.Println("Reading the words.txt")
+
+	words, err := readWordsFile("words.txt")
+	if err != nil {
+		log.Fatalf("Cannot read the words.txt file: %v\n", err)
+	}
+
+	log.Printf("--> total size: %d\n", len(words))
+
 	//
 	address := c.String("address")
 	port := c.String("port")
@@ -46,11 +60,36 @@ func runWeb(c *cli.Context) error {
 
 	//
 	if isProductionMode == true {
-		fmt.Printf("Listen on %s:%s\n", address, port)
+		log.Println("Starting web server")
+		log.Println("--> mode  : Production")
+		log.Printf("--> listen: %s:%s\n", address, port)
 	}
 
 	//
 	engine.Run(fmt.Sprintf("%s:%s", address, port))
 
 	return nil
+}
+
+func readWordsFile(filePath string) ([][]rune, error) {
+	words := [][]rune{}
+
+	file, err := os.Open(filePath)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+
+	reader := bufio.NewReader(file)
+	for {
+		line, err := reader.ReadBytes('\n')
+		if err != nil || err == io.EOF {
+			break
+		}else{
+			line  = bytes.TrimSpace(line)
+			words = append(words, bytes.Runes(line))
+		}
+	}
+
+	return words, nil
 }
