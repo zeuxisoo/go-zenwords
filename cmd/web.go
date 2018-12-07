@@ -1,16 +1,13 @@
 package cmd
 
 import (
-	"os"
-	"bufio"
-	"io"
-	"bytes"
 	"log"
 	"fmt"
 
 	"github.com/urfave/cli"
 	"github.com/gin-gonic/gin"
 
+	"github.com/zeuxisoo/go-zenwords/pkg/keywords"
 	"github.com/zeuxisoo/go-zenwords/routes/home"
 	"github.com/zeuxisoo/go-zenwords/routes/api"
 )
@@ -29,15 +26,11 @@ var Web = cli.Command{
 }
 
 func runWeb(c *cli.Context) error {
-	//
 	log.Println("Reading the words.txt")
 
-	words, err := readWordsFile("words.txt")
-	if err != nil {
-		log.Fatalf("Cannot read the words.txt file: %v\n", err)
-	}
+	keywords.NewKeywords("words.txt")
 
-	log.Printf("--> total size: %d\n", len(words))
+	log.Printf("--> size: %d\n", len(keywords.Words))
 
 	//
 	address := c.String("address")
@@ -69,27 +62,4 @@ func runWeb(c *cli.Context) error {
 	engine.Run(fmt.Sprintf("%s:%s", address, port))
 
 	return nil
-}
-
-func readWordsFile(filePath string) ([][]rune, error) {
-	words := [][]rune{}
-
-	file, err := os.Open(filePath)
-	if err != nil {
-		return nil, err
-	}
-	defer file.Close()
-
-	reader := bufio.NewReader(file)
-	for {
-		line, err := reader.ReadBytes('\n')
-		if err != nil || err == io.EOF {
-			break
-		}else{
-			line  = bytes.TrimSpace(line)
-			words = append(words, bytes.Runes(line))
-		}
-	}
-
-	return words, nil
 }
