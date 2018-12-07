@@ -1,4 +1,7 @@
-this
-this is
-this is a
-this is a test
+apple
+banana
+cat
+dog
+egg
+four
+give
