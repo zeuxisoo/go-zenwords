@@ -39,3 +39,7 @@
 [[constraint]]
   name = "github.com/smartystreets/goconvey"
   version = "1.6.3"
+
+[[constraint]]
+  revision = "e0859b23b68e16af9351fa755e1d928dbeb9d6a0"
+  name = "github.com/euclidr/darts"
