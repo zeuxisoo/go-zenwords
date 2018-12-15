@@ -31,15 +31,31 @@ func NewKeywords(keywordFile string) {
 	Builder  = builder
 }
 
-// ExtraSearch return the result string and match state base on content
-func ExtraSearch(content string) (result string, matched bool) {
-	index, matched := Builder.ExactMatchSearch(content)
+// ExtraSearch return the result string and match state base on the key
+func ExtraSearch(key string) (result string, matched bool) {
+	index, matched := Builder.ExactMatchSearch(key)
 
 	if matched == false {
 		return "", matched
 	}
 
 	return Words[index], matched
+}
+
+// PrefixSearch return the result set of string and match state base on the key
+func PrefixSearch(key string) (results []string, matched bool) {
+	indexes := Builder.CommonPrefixSearch(key)
+	values  := []string{}
+
+	if len(indexes) <= 0 {
+		return values, false
+	}
+
+	for _, position := range indexes {
+		values = append(values, Words[position])
+	}
+
+	return values, true
 }
 
 func loadFile(filePath string) ([]string, error) {
