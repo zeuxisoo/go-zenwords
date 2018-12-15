@@ -31,15 +31,15 @@ func NewKeywords(keywordFile string) {
 	Builder  = builder
 }
 
-// Search return the result string and match state base on content
-func Search(content string) (result string, matched bool) {
+// ExtraSearch return the result string and match state base on content
+func ExtraSearch(content string) (result string, matched bool) {
 	index, matched := Builder.ExactMatchSearch(content)
 
 	if matched == false {
 		return "", matched
-	}else{
-		return Words[index], matched
 	}
+
+	return Words[index], matched
 }
 
 func loadFile(filePath string) ([]string, error) {

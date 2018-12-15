@@ -1,7 +1,6 @@
 package api
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -13,11 +12,10 @@ import (
 func SearchPost(c *gin.Context) {
 	content := c.PostForm("content")
 
-	fmt.Println(content)
-
-	result, _ := keywords.Search(content)
+	result, matched := keywords.ExtraSearch(content)
 
 	c.JSON(http.StatusOK, gin.H{
 		"search": result,
+		"matched": matched,
 	})
 }
