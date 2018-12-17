@@ -49,7 +49,8 @@ func runWeb(c *cli.Context) error {
 
 	engine.
 		Group("/api").
-		POST("/search", api.SearchPost)
+		Group("/content").
+			POST("/replace", api.ContentReplacePost)
 
 	//
 	if isProductionMode == true {

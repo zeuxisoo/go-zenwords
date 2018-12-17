@@ -8,8 +8,8 @@ import (
 	"github.com/zeuxisoo/go-zenwords/pkg/keywords"
 )
 
-// SearchPost to handle the search action
-func SearchPost(c *gin.Context) {
+// ContentReplacePost to handle the search action
+func ContentReplacePost(c *gin.Context) {
 	content := c.PostForm("content")
 
 	result := keywords.Filter(content)
