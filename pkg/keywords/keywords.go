@@ -33,7 +33,7 @@ func NewKeywords(keywordFile string) {
 
 // Filter will return the filtered result
 func Filter(content string) string {
-	return SensitiveFilter.Replace(content, 42)
+	return SensitiveFilter.Replace(content, rune('*'))
 }
 
 func loadFile(filePath string) ([]string, error) {
