@@ -1,7 +1,6 @@
 package api
 
 import (
-	"strings"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -11,23 +10,11 @@ import (
 
 // SearchPost to handle the search action
 func SearchPost(c *gin.Context) {
-	kind := c.PostForm("kind")
-	key  := c.PostForm("key")
+	content := c.PostForm("content")
 
-	var result string
-	var matched bool
-
-	if strings.ToLower(kind) == "extra" {
-		result, matched = keywords.ExtraSearch(key)
-	}else{
-		values, state := keywords.PrefixSearch(key)
-
-		result  = strings.Join(values, ",")
-		matched = state
-	}
+	result := keywords.Filter(content)
 
 	c.JSON(http.StatusOK, gin.H{
-		"search": result,
-		"matched": matched,
+		"result": result,
 	})
 }

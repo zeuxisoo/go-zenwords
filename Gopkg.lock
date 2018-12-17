@@ -2,13 +2,6 @@
 
 
 [[projects]]
-  digest = "1:2c3d6ceb4ecdca402d90dd1db209fae2f94b7e338c666c4cef3fa79b23cd9330"
-  name = "github.com/euclidr/darts"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "e0859b23b68e16af9351fa755e1d928dbeb9d6a0"
-
-[[projects]]
   branch = "master"
   digest = "1:36fe9527deed01d2a317617e59304eb2c4ce9f8a24115bcc5c2e37b3aee5bae4"
   name = "github.com/gin-contrib/sse"
@@ -44,6 +37,14 @@
   packages = ["js"]
   pruneopts = "UT"
   revision = "d547d1d9531ed93dbdebcbff7f83e7c876a1e0ee"
+
+[[projects]]
+  branch = "master"
+  digest = "1:1757f49e822f6c507f7e38100d6b98dd2e6c850be7c64bcaad327c4b48e012bf"
+  name = "github.com/importcjj/sensitive"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "facc818f1e6e72c70eee38369e0002fe34e5cda2"
 
 [[projects]]
   digest = "1:3e551bbb3a7c0ab2a2bf4660e7fcad16db089fdcfbb44b0199e62838038623ea"
@@ -153,8 +154,8 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
-    "github.com/euclidr/darts",
     "github.com/gin-gonic/gin",
+    "github.com/importcjj/sensitive",
     "github.com/smartystreets/goconvey/convey",
     "github.com/urfave/cli",
   ]

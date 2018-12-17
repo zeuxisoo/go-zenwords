@@ -8,54 +8,32 @@ import (
 	"log"
 	"sort"
 
-	"github.com/euclidr/darts"
+	"github.com/importcjj/sensitive"
 )
 
 var (
-	Words		[]string
-	Builder		darts.DoubleArrayBuilder
+	SensitiveFilter *sensitive.Filter
+	Words 			[]string
 )
 
 // NewKeywords to setup the base keywords environment
 func NewKeywords(keywordFile string) {
 	words, err := loadFile(keywordFile)
 	if err != nil {
-		log.Fatalf("Cannot read the words.txt file: %v\n", err)
+		log.Fatalf("Cannot load the keyword file: %v", err)
 	}
 	sort.Strings(words)
 
-	builder := darts.DoubleArrayBuilder{}
-	builder.Build(words)
+	filter := sensitive.New()
+	filter.AddWord(words...)
 
-	Words    = words
-	Builder  = builder
+	SensitiveFilter = filter
+	Words = words
 }
 
-// ExtraSearch return the result string and match state base on the key
-func ExtraSearch(key string) (result string, matched bool) {
-	index, matched := Builder.ExactMatchSearch(key)
-
-	if matched == false {
-		return "", matched
-	}
-
-	return Words[index], matched
-}
-
-// PrefixSearch return the result set of string and match state base on the key
-func PrefixSearch(key string) (results []string, matched bool) {
-	indexes := Builder.CommonPrefixSearch(key)
-	values  := []string{}
-
-	if len(indexes) <= 0 {
-		return values, false
-	}
-
-	for _, position := range indexes {
-		values = append(values, Words[position])
-	}
-
-	return values, true
+// Filter will return the filtered result
+func Filter(content string) string {
+	return SensitiveFilter.Replace(content, 42)
 }
 
 func loadFile(filePath string) ([]string, error) {
