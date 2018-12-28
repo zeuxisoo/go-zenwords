@@ -5,10 +5,14 @@ import (
 	"net/http/httptest"
 
 	"github.com/gin-gonic/gin"
+
+	"github.com/zeuxisoo/go-zenwords/pkg/keywords"
 )
 
 // CreateEngine return the gin engine for test case
 func CreateEngine() *gin.Engine {
+	keywords.NewKeywords("../../words.txt")
+
 	engine := gin.New()
 	engine.Use(gin.Recovery())
 
