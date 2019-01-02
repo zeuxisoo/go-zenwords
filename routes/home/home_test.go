@@ -25,7 +25,7 @@ func init() {
 
 func TestHomeIndexGetOK(t *testing.T) {
 	Convey("HomeIndexGet / should be OK", t, func() {
-		responseRecorder := routes.PerformRequest(engine, "GET", "/")
+		responseRecorder := routes.PerformRequestGet(engine, "/")
 
 		So(responseRecorder.Code, ShouldEqual, http.StatusOK)
 		So(responseRecorder.Body.String(), ShouldEqual, "ZenWords")
@@ -35,7 +35,7 @@ func TestHomeIndexGetOK(t *testing.T) {
 func TestHomeRobotsTxtGetOK(t *testing.T) {
 	Convey("HomeRobotsTxtGet /robots.txt should be OK", t, func() {
 		Convey("When robots.txt is not exists", func() {
-			responseRecorder := routes.PerformRequest(engine, "GET", "/robots.txt")
+			responseRecorder := routes.PerformRequestGet(engine, "/robots.txt")
 
 			So(responseRecorder.Code, ShouldEqual, http.StatusOK)
 			So(responseRecorder.Body.String(), ShouldContainSubstring, "User-agent")
@@ -45,7 +45,7 @@ func TestHomeRobotsTxtGetOK(t *testing.T) {
 		Convey("When robots.txt is exists", func() {
 			ioutil.WriteFile("robots.txt", []byte("Hello World\nrobots.txt"), 0644)
 
-			responseRecorder := routes.PerformRequest(engine, "GET", "/robots.txt")
+			responseRecorder := routes.PerformRequestGet(engine, "/robots.txt")
 
 			So(responseRecorder.Code, ShouldEqual, http.StatusOK)
 			So(responseRecorder.Body.String(), ShouldContainSubstring, "Hello World")

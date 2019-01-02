@@ -28,3 +28,8 @@ func PerformRequest(handler http.Handler, method string, path string) *httptest.
 
 	return responseRecorder
 }
+
+// PerformRequestGet return the response detail for GET method and path
+func PerformRequestGet(handler http.Handler, path string) *httptest.ResponseRecorder {
+	return PerformRequest(handler, "GET", path)
+}
