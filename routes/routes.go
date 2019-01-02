@@ -2,6 +2,7 @@ package routes
 
 import (
 	"io"
+	"strings"
 	"net/http"
 	"net/http/httptest"
 
@@ -23,6 +24,11 @@ func CreateEngine() *gin.Engine {
 // PerformRequest return the response detail for related method and path
 func PerformRequest(handler http.Handler, method string, path string, body io.Reader) *httptest.ResponseRecorder {
 	request, _ := http.NewRequest(method, path, body)
+
+	if strings.ToUpper(method) == "POST" {
+		request.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	}
+
 	responseRecorder := httptest.NewRecorder()
 
 	handler.ServeHTTP(responseRecorder, request)
@@ -38,4 +44,9 @@ func PerformRequestGet(handler http.Handler, path string) *httptest.ResponseReco
 // PerformRequestPost return the response detail for POST method and path
 func PerformRequestPost(handler http.Handler, path string) *httptest.ResponseRecorder {
 	return PerformRequest(handler, "POST", path, nil)
+}
+
+// PerformRequestPostWithBody return the response detail for POST method, path and body
+func PerformRequestPostWithBody(handler http.Handler, path string, body string) *httptest.ResponseRecorder {
+	return PerformRequest(handler, "POST", path, strings.NewReader(body))
 }
