@@ -27,7 +27,7 @@ func init() {
 
 func TestContentReplacePostOK(t *testing.T) {
 	Convey("ContentReplacePost /api/content/replace should be OK", t, func() {
-		responseRecorder := routes.PerformRequest(engine, "POST", "/api/content/replace")
+		responseRecorder := routes.PerformRequestPost(engine, "/api/content/replace")
 
 		Convey("Http status is 200", func() {
 			So(responseRecorder.Code, ShouldEqual, http.StatusOK)
