@@ -49,3 +49,22 @@ func TestContentReplacePostOK(t *testing.T) {
 		})
 	})
 }
+
+func TestContentReplacePostWithContentOK(t *testing.T) {
+	Convey("ContentReplacePost /api/content/replace with content arguments should be OK", t, func() {
+		responseRecorder := routes.PerformRequestPostWithBody(engine, "/api/content/replace", "content=this is a apple")
+
+		Convey("Http status is 200", func() {
+			So(responseRecorder.Code, ShouldEqual, http.StatusOK)
+		})
+
+		Convey("JSON result should be equals 'this is a *****'", func() {
+			data := contracts.APIContentReplacePost{}
+
+			So(json.Unmarshal(responseRecorder.Body.Bytes(), &data), ShouldBeNil)
+			So(data, ShouldResemble, contracts.APIContentReplacePost{
+				Result: "this is a *****",
+			})
+		})
+	})
+}
