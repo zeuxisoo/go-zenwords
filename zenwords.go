@@ -18,6 +18,7 @@ func main() {
 	app.Version = AppVer
 	app.Commands = []cli.Command{
 		cmd.Web,
+		cmd.Rpc,
 	}
 	app.Run(os.Args)
 }
