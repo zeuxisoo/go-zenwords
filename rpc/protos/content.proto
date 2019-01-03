@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package protos;
+
+service ContentService {
+
+    rpc Replace (ContentReplaceRequest) returns (ContentReplaceResponse) {}
+
+}
+
+message ContentReplaceRequest {
+    string content = 1;
+}
+
+message ContentReplaceResponse {
+    string result = 1;
+}

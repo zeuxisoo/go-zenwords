@@ -1,3 +1,4 @@
+/rpc/protos/*.pb.go
 /vendor
 
 robots.txt
