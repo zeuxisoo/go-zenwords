@@ -13,6 +13,7 @@ type ContentServiceServer struct {
 // Replace will return the filtered content
 func (s *ContentServiceServer) Replace(context context.Context, request *protos.ContentReplaceRequest) (*protos.ContentReplaceResponse, error) {
 	return &protos.ContentReplaceResponse{
-		Result: "TODO: filter content action",
+		// TODO: filter content action
+		Result: "",
 	}, nil
 }
