@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"net"
 	"log"
-	"context"
 
 	"github.com/urfave/cli"
 	"google.golang.org/grpc"
 
 	"github.com/zeuxisoo/go-zenwords/rpc/protos"
+	"github.com/zeuxisoo/go-zenwords/rpc/servers"
 )
 
 // RPC command for start RPC service
@@ -24,13 +24,7 @@ var RPC = cli.Command{
 	},
 }
 
-type contentServiceServer struct {}
 
-func (s *contentServiceServer) Replace(context context.Context, request *protos.ContentReplaceRequest) (*protos.ContentReplaceResponse, error) {
-	return &protos.ContentReplaceResponse{
-		Result: "TODO: filter content action",
-	}, nil
-}
 
 func runRPC(c *cli.Context) error {
 	addressWithPort := fmt.Sprintf("%s:%s", c.String("address"), c.String("port"))
@@ -42,7 +36,7 @@ func runRPC(c *cli.Context) error {
 
 	server := grpc.NewServer()
 
-	protos.RegisterContentServiceServer(server, &contentServiceServer{})
+	protos.RegisterContentServiceServer(server, &servers.ContentServiceServer{})
 
 	server.Serve(listener)
 
