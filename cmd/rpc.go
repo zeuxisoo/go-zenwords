@@ -8,6 +8,7 @@ import (
 	"github.com/urfave/cli"
 	"google.golang.org/grpc"
 
+	"github.com/zeuxisoo/go-zenwords/pkg/keywords"
 	"github.com/zeuxisoo/go-zenwords/rpc/protos"
 	"github.com/zeuxisoo/go-zenwords/rpc/servers"
 )
@@ -27,7 +28,15 @@ var RPC = cli.Command{
 
 
 func runRPC(c *cli.Context) error {
-	addressWithPort := fmt.Sprintf("%s:%s", c.String("address"), c.String("port"))
+	log.Println("Reading the words.txt")
+
+	keywords.NewKeywords("words.txt")
+
+	log.Printf("--> size: %d\n", len(keywords.Words))
+
+	address         := c.String("address")
+	port            := c.String("port")
+	addressWithPort := fmt.Sprintf("%s:%s", address, port)
 
 	listener, err := net.Listen("tcp", addressWithPort)
 	if err != nil {
@@ -37,6 +46,9 @@ func runRPC(c *cli.Context) error {
 	server := grpc.NewServer()
 
 	protos.RegisterContentServiceServer(server, &servers.ContentServiceServer{})
+
+	log.Println("Starting RPC server")
+	log.Printf("--> listen: %s:%s\n", address, port)
 
 	server.Serve(listener)
 
