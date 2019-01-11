@@ -6,6 +6,7 @@ all:
 	@echo
 
 tools:
+	go get -u github.com/smartystreets/goconvey
 	go get -u github.com/golang/protobuf/protoc-gen-go
 
 generate:
