@@ -8,11 +8,12 @@ import (
 
 	"github.com/zeuxisoo/go-zenwords/rpc/protos"
 )
-
-func TestContentServiceServerReplaceIsOK(t *testing.T) {
+func TestReplaceWhenContentEmptyIsOK(t *testing.T) {
 	Convey("ContentServiceServer Replace method is OK", t, func() {
 		server  := ContentServiceServer{}
-		request := &protos.ContentReplaceRequest{}
+		request := &protos.ContentReplaceRequest{
+			Content: "",
+		}
 
 		response, err := server.Replace(context.Background(), request)
 
