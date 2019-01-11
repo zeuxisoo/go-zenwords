@@ -1,11 +1,9 @@
-package servers
+package rpc
 
 import (
-	"testing"
-
 	"github.com/zeuxisoo/go-zenwords/pkg/keywords"
 )
 
-func TestMain(m *testing.M) {
+func CreateRPC() {
 	keywords.NewKeywords("../../words.txt")
 }

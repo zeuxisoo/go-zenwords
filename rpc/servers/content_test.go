@@ -6,10 +6,16 @@ import (
 
 	. "github.com/smartystreets/goconvey/convey"
 
+	"github.com/zeuxisoo/go-zenwords/rpc"
 	"github.com/zeuxisoo/go-zenwords/rpc/protos"
 )
-func TestReplaceWhenContentEmptyIsOK(t *testing.T) {
-	Convey("ContentServiceServer Replace method is OK", t, func() {
+
+func init() {
+	rpc.CreateRPC()
+}
+
+func TestContentReplaceMethodIsOK(t *testing.T) {
+	Convey("When content is empty should be OK", t, func() {
 		server  := ContentServiceServer{}
 		request := &protos.ContentReplaceRequest{
 			Content: "",
