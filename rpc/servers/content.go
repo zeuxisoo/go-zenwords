@@ -3,20 +3,20 @@ package servers
 import (
 	"context"
 
-	"github.com/zeuxisoo/go-zenwords/rpc/protos"
+	"github.com/zeuxisoo/go-zenwords/rpc/proto"
 	"github.com/zeuxisoo/go-zenwords/pkg/keywords"
 )
 
-// ContentServiceServer is implementing a protos.ContentServiceServer
+// ContentServiceServer is implementing a proto.ContentServiceServer
 type ContentServiceServer struct {
 }
 
 // Replace will return the filtered content
-func (s *ContentServiceServer) Replace(context context.Context, request *protos.ContentReplaceRequest) (*protos.ContentReplaceResponse, error) {
+func (s *ContentServiceServer) Replace(context context.Context, request *proto.ContentReplaceRequest) (*proto.ContentReplaceResponse, error) {
 	content := request.GetContent()
 	result  := keywords.Filter(content)
 
-	return &protos.ContentReplaceResponse{
+	return &proto.ContentReplaceResponse{
 		Result: result,
 	}, nil
 }

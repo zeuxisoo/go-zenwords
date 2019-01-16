@@ -9,7 +9,7 @@ import (
 	"google.golang.org/grpc"
 
 	"github.com/zeuxisoo/go-zenwords/pkg/keywords"
-	"github.com/zeuxisoo/go-zenwords/rpc/protos"
+	"github.com/zeuxisoo/go-zenwords/rpc/proto"
 	"github.com/zeuxisoo/go-zenwords/rpc/servers"
 )
 
@@ -45,7 +45,7 @@ func runRPC(c *cli.Context) error {
 
 	server := grpc.NewServer()
 
-	protos.RegisterContentServiceServer(server, &servers.ContentServiceServer{})
+	proto.RegisterContentServiceServer(server, &servers.ContentServiceServer{})
 
 	log.Println("Starting RPC server")
 	log.Printf("--> listen: %s:%s\n", address, port)
