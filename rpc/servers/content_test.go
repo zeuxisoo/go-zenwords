@@ -6,12 +6,12 @@ import (
 
 	. "github.com/smartystreets/goconvey/convey"
 
-	"github.com/zeuxisoo/go-zenwords/rpc"
+	"github.com/zeuxisoo/go-zenwords/pkg/tester"
 	"github.com/zeuxisoo/go-zenwords/rpc/proto"
 )
 
 func init() {
-	rpc.CreateRPC()
+	tester.CreateRPC()
 }
 
 func TestContentReplaceMethodIsOK(t *testing.T) {
