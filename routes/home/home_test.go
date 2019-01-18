@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 	. "github.com/smartystreets/goconvey/convey"
 
-	"github.com/zeuxisoo/go-zenwords/routes"
+	"github.com/zeuxisoo/go-zenwords/pkg/tester"
 )
 
 var (
@@ -17,7 +17,7 @@ var (
 )
 
 func init() {
-	engine = routes.CreateEngine()
+	engine = tester.CreateEngine()
 
 	engine.GET("/", IndexGet)
 	engine.GET("/robots.txt", RobotsTxtGet)
@@ -25,7 +25,7 @@ func init() {
 
 func TestHomeIndexGetOK(t *testing.T) {
 	Convey("HomeIndexGet / should be OK", t, func() {
-		responseRecorder := routes.PerformRequestGet(engine, "/")
+		responseRecorder := tester.PerformRequestGet(engine, "/")
 
 		So(responseRecorder.Code, ShouldEqual, http.StatusOK)
 		So(responseRecorder.Body.String(), ShouldEqual, "ZenWords")
@@ -35,7 +35,7 @@ func TestHomeIndexGetOK(t *testing.T) {
 func TestHomeRobotsTxtGetOK(t *testing.T) {
 	Convey("HomeRobotsTxtGet /robots.txt should be OK", t, func() {
 		Convey("When robots.txt is not exists", func() {
-			responseRecorder := routes.PerformRequestGet(engine, "/robots.txt")
+			responseRecorder := tester.PerformRequestGet(engine, "/robots.txt")
 
 			So(responseRecorder.Code, ShouldEqual, http.StatusOK)
 			So(responseRecorder.Body.String(), ShouldContainSubstring, "User-agent")
@@ -45,7 +45,7 @@ func TestHomeRobotsTxtGetOK(t *testing.T) {
 		Convey("When robots.txt is exists", func() {
 			ioutil.WriteFile("robots.txt", []byte("Hello World\nrobots.txt"), 0644)
 
-			responseRecorder := routes.PerformRequestGet(engine, "/robots.txt")
+			responseRecorder := tester.PerformRequestGet(engine, "/robots.txt")
 
 			So(responseRecorder.Code, ShouldEqual, http.StatusOK)
 			So(responseRecorder.Body.String(), ShouldContainSubstring, "Hello World")

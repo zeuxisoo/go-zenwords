@@ -1,4 +1,4 @@
-package routes
+package tester
 
 import (
 	"io"

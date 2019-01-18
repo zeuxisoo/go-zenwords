@@ -8,8 +8,8 @@ import (
 	"github.com/gin-gonic/gin"
 	. "github.com/smartystreets/goconvey/convey"
 
-	"github.com/zeuxisoo/go-zenwords/routes"
 	"github.com/zeuxisoo/go-zenwords/pkg/contracts"
+	"github.com/zeuxisoo/go-zenwords/pkg/tester"
 )
 
 var (
@@ -17,7 +17,7 @@ var (
 )
 
 func init() {
-	engine = routes.CreateEngine()
+	engine = tester.CreateEngine()
 
 	engine.
 		Group("/api").
@@ -27,7 +27,7 @@ func init() {
 
 func TestContentReplacePostOK(t *testing.T) {
 	Convey("ContentReplacePost /api/content/replace should be OK", t, func() {
-		responseRecorder := routes.PerformRequestPost(engine, "/api/content/replace")
+		responseRecorder := tester.PerformRequestPost(engine, "/api/content/replace")
 
 		Convey("Http status is 200", func() {
 			So(responseRecorder.Code, ShouldEqual, http.StatusOK)
@@ -52,7 +52,7 @@ func TestContentReplacePostOK(t *testing.T) {
 
 func TestContentReplacePostWithContentOK(t *testing.T) {
 	Convey("ContentReplacePost /api/content/replace with content arguments should be OK", t, func() {
-		responseRecorder := routes.PerformRequestPostWithBody(engine, "/api/content/replace", "content=this is a apple")
+		responseRecorder := tester.PerformRequestPostWithBody(engine, "/api/content/replace", "content=this is a apple")
 
 		Convey("Http status is 200", func() {
 			So(responseRecorder.Code, ShouldEqual, http.StatusOK)
