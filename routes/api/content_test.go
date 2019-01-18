@@ -17,7 +17,7 @@ var (
 )
 
 func init() {
-	engine = tester.CreateEngine()
+	engine = tester.CreateWebEngine()
 
 	engine.
 		Group("/api").
@@ -27,7 +27,7 @@ func init() {
 
 func TestContentReplacePostOK(t *testing.T) {
 	Convey("ContentReplacePost /api/content/replace should be OK", t, func() {
-		responseRecorder := tester.PerformRequestPost(engine, "/api/content/replace")
+		responseRecorder := tester.PerformWebRequestPost(engine, "/api/content/replace")
 
 		Convey("Http status is 200", func() {
 			So(responseRecorder.Code, ShouldEqual, http.StatusOK)
@@ -52,7 +52,7 @@ func TestContentReplacePostOK(t *testing.T) {
 
 func TestContentReplacePostWithContentOK(t *testing.T) {
 	Convey("ContentReplacePost /api/content/replace with content arguments should be OK", t, func() {
-		responseRecorder := tester.PerformRequestPostWithBody(engine, "/api/content/replace", "content=this is a apple")
+		responseRecorder := tester.PerformWebRequestPostWithBody(engine, "/api/content/replace", "content=this is a apple")
 
 		Convey("Http status is 200", func() {
 			So(responseRecorder.Code, ShouldEqual, http.StatusOK)

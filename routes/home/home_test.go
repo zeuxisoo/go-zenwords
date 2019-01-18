@@ -17,7 +17,7 @@ var (
 )
 
 func init() {
-	engine = tester.CreateEngine()
+	engine = tester.CreateWebEngine()
 
 	engine.GET("/", IndexGet)
 	engine.GET("/robots.txt", RobotsTxtGet)
@@ -25,7 +25,7 @@ func init() {
 
 func TestHomeIndexGetOK(t *testing.T) {
 	Convey("HomeIndexGet / should be OK", t, func() {
-		responseRecorder := tester.PerformRequestGet(engine, "/")
+		responseRecorder := tester.PerformWebRequestGet(engine, "/")
 
 		So(responseRecorder.Code, ShouldEqual, http.StatusOK)
 		So(responseRecorder.Body.String(), ShouldEqual, "ZenWords")
@@ -35,7 +35,7 @@ func TestHomeIndexGetOK(t *testing.T) {
 func TestHomeRobotsTxtGetOK(t *testing.T) {
 	Convey("HomeRobotsTxtGet /robots.txt should be OK", t, func() {
 		Convey("When robots.txt is not exists", func() {
-			responseRecorder := tester.PerformRequestGet(engine, "/robots.txt")
+			responseRecorder := tester.PerformWebRequestGet(engine, "/robots.txt")
 
 			So(responseRecorder.Code, ShouldEqual, http.StatusOK)
 			So(responseRecorder.Body.String(), ShouldContainSubstring, "User-agent")
@@ -45,7 +45,7 @@ func TestHomeRobotsTxtGetOK(t *testing.T) {
 		Convey("When robots.txt is exists", func() {
 			ioutil.WriteFile("robots.txt", []byte("Hello World\nrobots.txt"), 0644)
 
-			responseRecorder := tester.PerformRequestGet(engine, "/robots.txt")
+			responseRecorder := tester.PerformWebRequestGet(engine, "/robots.txt")
 
 			So(responseRecorder.Code, ShouldEqual, http.StatusOK)
 			So(responseRecorder.Body.String(), ShouldContainSubstring, "Hello World")
