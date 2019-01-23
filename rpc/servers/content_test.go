@@ -15,15 +15,29 @@ func init() {
 }
 
 func TestContentReplaceMethodIsOK(t *testing.T) {
-	Convey("When content is empty should be OK", t, func() {
-		server  := ContentServiceServer{}
-		request := &proto.ContentReplaceRequest{
-			Content: "",
-		}
+	Convey("Content replace should be OK", t, func() {
+		server := ContentServiceServer{}
 
-		response, err := server.Replace(context.Background(), request)
+		Convey("When content is empty should be OK", func() {
+			request := &proto.ContentReplaceRequest{
+				Content: "",
+			}
 
-		So(err, ShouldBeNil)
-		So(response.Result, ShouldEqual, "")
+			response, err := server.Replace(context.Background(), request)
+
+			So(err, ShouldBeNil)
+			So(response.Result, ShouldEqual, "")
+		})
+
+		Convey("When content is not empty should be equals 'this is a *****'", func() {
+			request := &proto.ContentReplaceRequest{
+				Content: "this is a apple",
+			}
+
+			response, err := server.Replace(context.Background(), request)
+
+			So(err, ShouldBeNil)
+			So(response.Result, ShouldEqual, "this is a *****")
+		})
 	})
 }
