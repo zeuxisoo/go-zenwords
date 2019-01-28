@@ -11,5 +11,6 @@ var RPC = cli.Command{
 	Description: "Run zenWords gRPC server / client for check service",
 	Subcommands: []cli.Command{
 		rpcServer,
+		rpcClient,
 	},
 }
