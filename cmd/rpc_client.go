@@ -2,8 +2,16 @@ package cmd
 
 import (
 	"fmt"
+	"log"
+	"os"
+	"bufio"
+	"strings"
+	"context"
 
+	"google.golang.org/grpc"
 	"github.com/urfave/cli"
+
+	"github.com/zeuxisoo/go-zenwords/rpc/proto"
 )
 
 var rpcClient = cli.Command{
@@ -18,7 +26,55 @@ var rpcClient = cli.Command{
 }
 
 func runRPCClient(c *cli.Context) error {
-	fmt.Println("RPC Client")
+	address         := c.String("address")
+	port            := c.String("port")
+	addressWithPort := fmt.Sprintf("%s:%s", address, port)
+
+	//
+	connection, err := grpc.Dial(addressWithPort, grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("Fail to dail to %s: %v", addressWithPort, err)
+	}
+	defer connection.Close()
+
+	client := proto.NewContentServiceClient(connection)
+
+	//
+	reader := bufio.NewReader(os.Stdin)
+
+	for {
+		fmt.Print("> ")
+
+		text, err := reader.ReadString('\n')
+		if err != nil {
+			fmt.Println("ERROR! Unknown error when read the input value")
+			continue
+		}
+
+		// Remove all \n and trim the space
+		text = strings.Trim(strings.Replace(text, "\n", "", -1), " ")
+
+		if len(text) <= 0 {
+			continue
+		}
+
+		if strings.Compare(text, "exit") == 0 {
+			fmt.Println("Bye!")
+			break
+		}
+
+		response, err := client.Replace(
+			context.Background(),
+			&proto.ContentReplaceRequest{
+				Content: text,
+			},
+		)
+		if err != nil {
+			log.Fatalf("Content replace response error: %v", err)
+		}
+
+		fmt.Println(response.GetResult())
+	}
 
 	return nil
 }
