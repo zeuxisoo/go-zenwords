@@ -234,6 +234,14 @@
   version = "v8.18.2"
 
 [[projects]]
+  digest = "1:723aa81f50d50bb5e5e67c3076c0cb498c07cbb74dbcac462c2e8973a84df90c"
+  name = "gopkg.in/gookit/color.v1"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "03c3187105615d576d255124f688cee79b8e25b5"
+  version = "v1.1.6"
+
+[[projects]]
   digest = "1:4d2e5a73dc1500038e504a8d78b986630e3626dc027bc030ba5c75da257cdb96"
   name = "gopkg.in/yaml.v2"
   packages = ["."]
@@ -251,6 +259,7 @@
     "github.com/smartystreets/goconvey/convey",
     "github.com/urfave/cli",
     "google.golang.org/grpc",
+    "gopkg.in/gookit/color.v1",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1

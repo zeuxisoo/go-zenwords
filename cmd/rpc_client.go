@@ -10,6 +10,7 @@ import (
 
 	"google.golang.org/grpc"
 	"github.com/urfave/cli"
+	"gopkg.in/gookit/color.v1"
 
 	"github.com/zeuxisoo/go-zenwords/rpc/proto"
 )
@@ -40,14 +41,20 @@ func runRPCClient(c *cli.Context) error {
 	client := proto.NewContentServiceClient(connection)
 
 	//
+	lightWhite := color.FgLightWhite.Render
+	lightRed   := color.FgLightRed.Render
+	lightBlue  := color.FgLightBlue.Render
+	lightGreen := color.FgLightGreen.Render
+
+	//
 	reader := bufio.NewReader(os.Stdin)
 
 	for {
-		fmt.Print("> ")
+		fmt.Print(lightWhite("> "))
 
 		text, err := reader.ReadString('\n')
 		if err != nil {
-			fmt.Println("ERROR! Unknown error when read the input value")
+			fmt.Println(lightRed("ERROR! Unknown error when read the input value"))
 			continue
 		}
 
@@ -59,7 +66,7 @@ func runRPCClient(c *cli.Context) error {
 		}
 
 		if strings.Compare(text, "exit") == 0 {
-			fmt.Println("Bye!")
+			fmt.Println(lightBlue("Bye!"))
 			break
 		}
 
@@ -73,7 +80,7 @@ func runRPCClient(c *cli.Context) error {
 			log.Fatalf("Content replace response error: %v", err)
 		}
 
-		fmt.Println(response.GetResult())
+		fmt.Println(lightGreen(response.GetResult()))
 	}
 
 	return nil
