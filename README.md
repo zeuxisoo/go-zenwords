@@ -19,3 +19,11 @@ Generate the related code from protocol buffers
 Build the application
 
     go build -o zenwords *.go
+
+Copy wrods file and edit it
+
+    cp words.txt /path/to/your/app/root/words.txt
+
+Run the program
+
+    ./zenwords
